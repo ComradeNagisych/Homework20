@@ -1,9 +1,11 @@
 package tv.ksstream.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import tv.ksstream.homework19.exception.EmployeeAlreadyExistsException;
-import tv.ksstream.homework19.exception.EmployeeNotFoundException;
-import tv.ksstream.homework19.model.Employee;
+import tv.ksstream.exception.EmployeeAlreadyExistsException;
+import tv.ksstream.exception.EmployeeNotFoundException;
+import tv.ksstream.exception.InvalidNameException;
+import tv.ksstream.model.Employee;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -16,7 +18,8 @@ public class MapBasedEmployeeService implements EmployeeService {
 
     @Override
     public Employee add(String firstName, String lastName, int salary, int department) {
-        Employee employee = new Employee(firstName, lastName, salary, department);
+        validateNames(firstName, lastName);
+        Employee employee = new Employee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName), salary, department);
         if (storage.containsKey(firstName + lastName + salary + department)) {
             throw new EmployeeAlreadyExistsException("Employee already exists, addition impossible");
         }
@@ -40,5 +43,12 @@ public class MapBasedEmployeeService implements EmployeeService {
     @Override
     public Collection<Employee> findAll() {
         return Collections.unmodifiableCollection(storage.values());
+    }
+    private void validateNames(String... names) {
+        for (String name : names) {
+            if (!StringUtils.isAlpha(name)) {
+                throw new InvalidNameException("Name " + name + " is invalid");
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 package tv.ksstream.service;
 
-import tv.ksstream.homework19.exception.EmployeeNotFoundException;
-import tv.ksstream.homework19.model.Employee;
+import tv.ksstream.exception.EmployeeNotFoundException;
+import tv.ksstream.model.Employee;
 
 import java.util.Collection;
 import java.util.Comparator;

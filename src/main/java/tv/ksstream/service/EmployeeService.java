@@ -1,6 +1,6 @@
 package tv.ksstream.service;
 
-import tv.ksstream.homework19.model.Employee;
+import tv.ksstream.model.Employee;
 
 import java.util.Collection;
 
